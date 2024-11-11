@@ -97,7 +97,9 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename"></stringProp>
+          <stringProp name="filename">results.csv</stringProp>
+          <boolProp name="ResultCollector.success_only_logging">true</boolProp>
+          <boolProp name="useGroupName">true</boolProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
@@ -138,9 +140,8 @@
         </ResultCollector>
         <hashTree/>
         <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults">
-          <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
-          <stringProp name="HTTPSampler.port">4000</stringProp>
-          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.domain">dev.caterorange.com</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -156,13 +157,75 @@
           </collectionProp>
         </HeaderManager>
         <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="login">
+          <stringProp name="HTTPSampler.path">/api/customer/login</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+&#xd;
+&quot;customer_email&quot; : &quot;navaneethabonala@gmail.com&quot;,&#xd;
+&quot;customer_password&quot; : &quot;Welcome123&quot;&#xd;
+	&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+            <stringProp name="JSONPostProcessor.referenceNames"></stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+            <stringProp name="Sample.scope">variable</stringProp>
+            <stringProp name="Scope.variable">usertoken</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login">
+          <stringProp name="HTTPSampler.path">/api/customer/login</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+&#xd;
+&quot;customer_email&quot; : &quot;navaneethabonala@gmail.com&quot;,&#xd;
+&quot;customer_password&quot; : &quot;Welcome123&quot;&#xd;
+	&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+            <stringProp name="JSONPostProcessor.referenceNames"></stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+            <stringProp name="Sample.scope">variable</stringProp>
+            <stringProp name="Scope.variable">admintoken</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Admin_Graphql">
           <stringProp name="LoopController.loops">1</stringProp>
         </LoopController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getAllCustomers1">
-            <stringProp name="HTTPSampler.domain">localhost</stringProp>
-            <stringProp name="HTTPSampler.port">4000</stringProp>
             <stringProp name="HTTPSampler.path">/graphql</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -262,8 +325,9 @@
           </HTTPSamplerProxy>
           <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getAllItems">
+            <stringProp name="HTTPSampler.path">/graphql</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -281,8 +345,9 @@
           </HTTPSamplerProxy>
           <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getAnalytics">
+            <stringProp name="HTTPSampler.path">/graphql</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -298,84 +363,74 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="CreateCategory">
+            <stringProp name="HTTPSampler.path">/graphql</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">&#xd;
+&#xd;
+{&#xd;
+  &quot;query&quot;: &quot;mutation { createCategory(category_name: \&quot;Lunch\&quot;, category_description: \&quot;des\&quot;, category_price: 100, category_media: \&quot;categoryMedia\&quot;) { category_name category_description category_price  category_media} }&quot;&#xd;
+}&#xd;
+</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="deleteCategory">
+            <stringProp name="HTTPSampler.contentEncoding">lql</stringProp>
+            <stringProp name="HTTPSampler.path">/graphql</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">DELETE</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">deleteCategory(category_id: $categoryId)&#xd;
+&#xd;
+{&#xd;
+  &quot;query&quot;: &quot;mutation { deleteCategory(category_id: 55) }&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="updateCategory">
+            <stringProp name="HTTPSampler.path">/graphql</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;query&quot;: &quot;mutation {updateCategory(category_id: 2, category_name: \&quot;Lunchh\&quot;, category_description: \&quot;desc\&quot;, category_price: 50)}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
         </hashTree>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="User_localhost">
           <stringProp name="LoopController.loops">1</stringProp>
         </LoopController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="login">
-            <stringProp name="HTTPSampler.path">/api/customer/login</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&#xd;
-&#xd;
-&quot;customer_email&quot; : &quot;nitaa@gmail.com&quot;,&#xd;
-&quot;customer_password&quot; : &quot;Welcome123&quot;&#xd;
-	&#xd;
-}&#xd;
-</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
-              <stringProp name="JSONPostProcessor.referenceNames"></stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">token</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              <stringProp name="Sample.scope">variable</stringProp>
-              <stringProp name="Scope.variable">usertoken</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-            <SizeAssertion guiclass="SizeAssertionGui" testclass="SizeAssertion" testname="Size Assertion">
-              <stringProp name="Assertion.test_field">SizeAssertion.response_network_size</stringProp>
-              <stringProp name="SizeAssertion.size"></stringProp>
-              <intProp name="SizeAssertion.operator">1</intProp>
-            </SizeAssertion>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login">
-            <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
-            <stringProp name="HTTPSampler.port">4000</stringProp>
-            <stringProp name="HTTPSampler.protocol">http</stringProp>
-            <stringProp name="HTTPSampler.path">/api/customer/login</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&#xd;
-&#xd;
-&quot;customer_email&quot; : &quot;navi@gmail.com&quot;,&#xd;
-&quot;customer_password&quot; : &quot;Welcome123&quot;&#xd;
-	&#xd;
-}&#xd;
-</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
-              <stringProp name="JSONPostProcessor.referenceNames"></stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">token</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              <stringProp name="Sample.scope">variable</stringProp>
-              <stringProp name="Scope.variable">admintoken</stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
           <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
@@ -504,11 +559,11 @@
             </HTTPSamplerProxy>
             <hashTree/>
           </hashTree>
-          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="corporateOrder">
+          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="corporateOrder" enabled="true">
             <stringProp name="LoopController.loops">1</stringProp>
           </LoopController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Corporate Cart add">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Corporate Cart add" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/cart/corporate</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -519,7 +574,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get corporate cart">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get corporate cart" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/getCorporateCarts</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -530,7 +585,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get cart count">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get cart count" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/getCartCount</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -541,7 +596,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="update cart item">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="update cart item" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/updateCartItem/:corporatecart_id</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">PUT</stringProp>
@@ -552,7 +607,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="delete cart item">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="delete cart item" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/removeCartItem/:corporatecart_id</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">DELETE</stringProp>
@@ -563,7 +618,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="corporateOrderDetails">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="corporateOrderDetails" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/corporateOrderDetails</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -585,7 +640,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="corporate transfer-cart-to-order">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="corporate transfer-cart-to-order" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/corporate/transfer-cart-to-order</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -596,7 +651,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get category name By id">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get category name By id" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/getcategorynameByid</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -608,11 +663,11 @@
             </HTTPSamplerProxy>
             <hashTree/>
           </hashTree>
-          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Customer details">
+          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Customer details" enabled="true">
             <stringProp name="LoopController.loops">1</stringProp>
           </LoopController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="customer info">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="customer info" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/info</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -623,7 +678,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OTP send">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OTP send" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/send-otp</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -634,7 +689,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="checkcustomer">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="checkcustomer" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/checkcustomer</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -645,7 +700,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="verify-otp">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="verify-otp" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/verify-otp</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -656,7 +711,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="checkCustomerOtp">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="checkCustomerOtp" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/checkCustomerOtp</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -667,7 +722,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="customer signup/register">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="customer signup/register" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer/register</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -689,7 +744,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get customer by id">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get customer by id" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer_address/:customer_id</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -700,7 +755,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get user by token">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get user by token" enabled="true">
               <stringProp name="HTTPSampler.path">/api/customer</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -712,11 +767,11 @@
             </HTTPSamplerProxy>
             <hashTree/>
           </hashTree>
-          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Events">
+          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Events" enabled="true">
             <stringProp name="LoopController.loops">1</stringProp>
           </LoopController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="event_order">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="event_order" enabled="true">
               <stringProp name="HTTPSampler.path">/api/event_order</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -727,7 +782,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getevent_order by id">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getevent_order by id" enabled="true">
               <stringProp name="HTTPSampler.path">/api/getevent_order/:id</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -760,7 +815,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="delete address by id">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="delete address by id" enabled="true">
               <stringProp name="HTTPSampler.path">/api/addresses/:address_id</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">PUT</stringProp>
